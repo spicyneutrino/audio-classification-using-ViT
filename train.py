@@ -1,18 +1,17 @@
+import argparse
 import os
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from data import get_datasets
-from model import get_model
+from scripts.data import get_datasets
+from scripts.model import get_model
 from modules.going_modular import engine
 
 BATCH_SIZE = 32
 NUM_WORKERS = os.cpu_count()
 NUM_CLASSES = 10
-NUM_EPOCHS = 10
 
-
-def main():
+def main(num_epochs: int):
     device = "cpu"
     if torch.cuda.is_available():
         device = "cuda"
@@ -64,13 +63,28 @@ def main():
     model_results = engine.train(
         model=model,
         train_dataloader=train_dataloader,
-        test_dataloader=test_dataloader,
+        val_dataloader=val_dataloader,
         optimizer=optimizer,
         loss_fn=loss_fn,
-        epochs=NUM_EPOCHS,
+        epochs=num_epochs,
         device=device,
         writer=writer,
     )
 
+    test_loss, test_acc = engine.test_step(
+        model=model,
+        dataloader=test_dataloader,
+        loss_fn=loss_fn,
+        device=device,
+    )
+
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--num_epochs",
+        type=int,
+        default=10,
+        help="Number of epochs to train the model",
+    )
+    args = parser.parse_args()
+    main(args.num_epochs)

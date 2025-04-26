@@ -133,7 +133,7 @@ def test_step(
 def train(
     model: torch.nn.Module,
     train_dataloader: torch.utils.data.DataLoader,
-    test_dataloader: torch.utils.data.DataLoader,
+    val_dataloader: torch.utils.data.DataLoader,
     optimizer: torch.optim.Optimizer,
     loss_fn: torch.nn.Module,
     epochs: int,
@@ -163,7 +163,7 @@ def train(
             device=device,
         )
         test_loss, test_acc = test_step(
-            model=model, dataloader=test_dataloader, loss_fn=loss_fn, device=device
+            model=model, dataloader=val_dataloader, loss_fn=loss_fn, device=device
         )
 
         # Print out what's happening
