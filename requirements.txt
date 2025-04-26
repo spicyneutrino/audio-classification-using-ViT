@@ -5,6 +5,7 @@ numpy
 librosa
 datasets
 tqdm
-requests
+tensorboard
 torchinfo
 matplotlib
+datasets
