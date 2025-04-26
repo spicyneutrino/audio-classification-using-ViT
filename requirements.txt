@@ -1,0 +1,10 @@
+torch
+torchvision
+torchaudio
+numpy
+librosa
+datasets
+tqdm
+requests
+torchinfo
+matplotlib

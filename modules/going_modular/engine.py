@@ -140,11 +140,8 @@ def train(
     device: torch.device,
     writer: torch.utils.tensorboard.SummaryWriter,
     save_dir: str = "checkpoints",
-    save_n_epoch: int = 10,
+    save_n_epoch: int = 5,
 ) -> Dict[str, List]:
-    
-    epochs_no_improve = 0
-    early_stop = False
 
     results = {"train_loss": [], "train_acc": [], "test_loss": [], "test_acc": []}
 
