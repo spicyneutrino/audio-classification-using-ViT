@@ -94,4 +94,4 @@ if __name__ == "__main__":
         help="Number of workers for the data loaders",
     )
     args = parser.parse_args()
-    main(args.num_epochs)
+    main(args.num_epochs, args.num_workers)
