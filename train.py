@@ -8,7 +8,7 @@ from scripts.model import get_model
 from modules.going_modular import engine
 
 BATCH_SIZE = 32
-NUM_WORKERS = os.cpu_count()
+NUM_WORKERS = 8
 NUM_CLASSES = 10
 
 def main(num_epochs: int):
