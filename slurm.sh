@@ -20,6 +20,12 @@ echo "Number of CPUs allocated: $SLURM_CPUS_PER_TASK" # Verify CPU allocation
 export PROJECT_ROOT="/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT"
 echo "Project Root: $PROJECT_ROOT"
 
+# PYTORCH CACHING
+export TORCH_HOME="/scratch/ptolemy/users/kg1623/.cache/torch"
+mkdir -p $TORCH_HOME/hub/checkpoints
+echo "Setting Torch cache to: $TORCH_HOME"
+
+# HUGGINGFACE CACHING
 # Define and ensure the SHARED cache directory exists
 export HF_HOME="/scratch/ptolemy/users/kg1623/.cache/huggingface"
 mkdir -p $HF_HOME
