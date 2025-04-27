@@ -2,7 +2,7 @@
 #SBATCH --job-name=model_train
 #SBATCH --output=model_train%j.out
 #SBATCH --error=model_train%j.err
-#SBATCH --partition=gpu-ptolemy
+#SBATCH --partition=ptolemy
 #SBATCH --gres=gpu:1
 #SBATCH --account=research-cse
 #SBATCH --nodes=1                   # Number of nodes to use
