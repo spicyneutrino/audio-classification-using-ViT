@@ -8,5 +8,3 @@ tqdm
 tensorboard
 torchinfo
 matplotlib
-datasets
-argparse
