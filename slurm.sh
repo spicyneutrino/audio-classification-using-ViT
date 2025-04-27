@@ -7,8 +7,8 @@
 #SBATCH --account=research-cse
 #SBATCH --nodes=1                   # Number of nodes to use
 #SBATCH --ntasks=1                  # Total number of MPI tasks (processes)
-#SBATCH --cpus-per-task=16          # Request multiple CPUs for the main task
-#SBATCH --mem=32G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
+#SBATCH --cpus-per-task=32          # Request multiple CPUs for the main task
+#SBATCH --mem=64G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
 #SBATCH --time=03:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
@@ -66,7 +66,7 @@ echo "PYTHONPATH: $PYTHONPATH"
 # --- Run the Training Script ---
 echo "Running train.py script..."
 
-srun python train.py --num_epochs 75
+srun python train.py --num_epochs 75 --num_workers $SLURM_CPUS_PER_TASK
 
 EXIT_CODE=$? # Capture exit code
 echo "Python script finished with exit code $EXIT_CODE at $(date)"

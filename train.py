@@ -8,10 +8,10 @@ from scripts.model import get_model
 from modules.going_modular import engine
 
 BATCH_SIZE = 32
-NUM_WORKERS = 8
 NUM_CLASSES = 10
 
-def main(num_epochs: int):
+
+def main(num_epochs: int, num_workers: int):
     device = "cpu"
     if torch.cuda.is_available():
         device = "cuda"
@@ -23,7 +23,7 @@ def main(num_epochs: int):
         train_dataset,
         batch_size=BATCH_SIZE,
         shuffle=True,
-        num_workers=NUM_WORKERS,
+        num_workers=num_workers,
         pin_memory=True,
     )
 
@@ -31,7 +31,7 @@ def main(num_epochs: int):
         val_dataset,
         batch_size=BATCH_SIZE,
         shuffle=False,
-        num_workers=NUM_WORKERS,
+        num_workers=num_workers,
         pin_memory=True,
     )
 
@@ -39,7 +39,7 @@ def main(num_epochs: int):
         test_dataset,
         batch_size=BATCH_SIZE,
         shuffle=False,
-        num_workers=NUM_WORKERS,
+        num_workers=num_workers,
         pin_memory=True,
     )
 
@@ -78,6 +78,7 @@ def main(num_epochs: int):
         device=device,
     )
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -85,6 +86,12 @@ if __name__ == "__main__":
         type=int,
         default=10,
         help="Number of epochs to train the model",
+    )
+    parser.add_argument(
+        "--num_workers",
+        type=int,
+        default=os.cpu_count() // 2 if os.cpu_count() > 1 else 0,
+        help="Number of workers for the data loaders",
     )
     args = parser.parse_args()
     main(args.num_epochs)
