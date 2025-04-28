@@ -7,21 +7,25 @@ from scripts.data import get_datasets
 from scripts.model import get_model
 from modules.going_modular import engine
 
-BATCH_SIZE = 32
 NUM_CLASSES = 10
 
 
-def main(num_epochs: int, num_workers: int):
-    device = "cpu"
+def main(num_epochs: int, num_workers: int, batch_size: int):
+    device_name = "cpu"
     if torch.cuda.is_available():
-        device = "cuda"
+        torch.backends.cudnn.benchmark = True
+        device_name = "cuda"
     elif torch.backends.mps.is_available():
-        device = "mps"
+        device_name = "mps"
+    device = torch.device(device_name)
+    print(f"Using device: {device}")
+    print(f"Number of workers: {num_workers}")
+    print(f"Batch size: {batch_size}")
 
     train_dataset, val_dataset, test_dataset = get_datasets()
     train_dataloader = DataLoader(
         train_dataset,
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
         pin_memory=True,
@@ -29,7 +33,7 @@ def main(num_epochs: int, num_workers: int):
 
     val_dataloader = DataLoader(
         val_dataset,
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
         pin_memory=True,
@@ -37,7 +41,7 @@ def main(num_epochs: int, num_workers: int):
 
     test_dataloader = DataLoader(
         test_dataset,
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
         pin_memory=True,
@@ -79,7 +83,9 @@ def main(num_epochs: int, num_workers: int):
         model.load_state_dict(checkpoint["model_state_dict"])
         print("Best model loaded successfully.")
     else:
-        print(f"Best model not found at {best_model_path}. Evaluating the model from last epoch.")
+        print(
+            f"Best model not found at {best_model_path}. Evaluating the model from last epoch."
+        )
 
     print("\nEvaluating best model on Test Dataset...")
     test_loss, test_acc = engine.test_step(
@@ -106,5 +112,11 @@ if __name__ == "__main__":
         default=os.cpu_count() // 2 if os.cpu_count() > 1 else 0,
         help="Number of workers for the data loaders",
     )
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=32,
+        help="Number of workers for the data loaders",
+    )
     args = parser.parse_args()
-    main(args.num_epochs, args.num_workers)
+    main(args.num_epochs, args.num_workers, args.batch_size)

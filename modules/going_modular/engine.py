@@ -4,6 +4,7 @@ Contains functions for training and testing a PyTorch model.
 
 import torch
 import numpy as np
+from torch.amp import GradScaler
 
 import torch.utils.tensorboard
 from tqdm.auto import tqdm
@@ -19,6 +20,7 @@ def train_step(
     loss_fn: torch.nn.Module,
     optimizer: torch.optim.Optimizer,
     device: torch.device,
+    scaler: torch.cuda.amp.GradScaler,
 ) -> Tuple[float, float]:
     """Trains a PyTorch model for a single epoch.
 
@@ -51,22 +53,26 @@ def train_step(
         X = batch_dict["pixel_values"].to(device)
         y = batch_dict["labels"].to(device)
 
-        # 1. Forward pass
-        y_pred = model(X)
+        # Automatic mixed precision (AMP) context manager
+        with torch.amp.autocast(device_type=device.type, dtype=torch.float16):
+            # 1. Forward pass
+            y_pred = model(X)
 
-        # 2. Calculate  and accumulate loss
-        loss = loss_fn(y_pred, y)
+            # 2. Calculate  and accumulate loss
+            loss = loss_fn(y_pred, y)
+
         train_loss += loss.item()
 
         # 3. Optimizer zero grad
         optimizer.zero_grad()
 
         # 4. Loss backward
-        loss.backward()
+        scaler.scale(loss).backward()
 
         # 5. Optimizer step
-        optimizer.step()
-
+        # optimizer.step()
+        scaler.step(optimizer)
+        scaler.update()
         # Calculate and accumulate accuracy metric across all batches
         y_pred_class = torch.argmax(torch.softmax(y_pred, dim=1), dim=1)
         train_acc += (y_pred_class == y).sum().item() / len(y_pred)
@@ -107,7 +113,9 @@ def test_step(
     test_loss, test_acc = 0, 0
 
     # Turn on inference context manager
-    with torch.inference_mode():
+    with torch.inference_mode(), torch.amp.autocast(
+        device_type=device.type, dtype=torch.float16
+    ):
         # Loop through DataLoader batches
         for batch_idx, batch_dict in enumerate(dataloader):
             # Send data to target device
@@ -149,6 +157,9 @@ def train(
     # It's good practice to trace in eval mode
     model.train()
 
+    # Use automatic mixed precision (AMP) if CUDA is available
+    scaler = GradScaler(enabled=(device.type == "cuda"))
+
     # Initialize early stopping variables
     best_val_loss = np.inf
     epoch_no_improvement = 0
@@ -166,6 +177,7 @@ def train(
             loss_fn=loss_fn,
             optimizer=optimizer,
             device=device,
+            scaler=scaler,
         )
         val_loss, val_acc = test_step(
             model=model, dataloader=val_dataloader, loss_fn=loss_fn, device=device
