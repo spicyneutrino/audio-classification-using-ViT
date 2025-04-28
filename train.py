@@ -56,7 +56,7 @@ def main(num_epochs: int, num_workers: int):
         lr=1e-3,
         weight_decay=1e-2,
     )
-    loss_fn = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
+    loss_fn = torch.nn.CrossEntropyLoss()
 
     writer = SummaryWriter("runs/urbansound8k")
 
@@ -70,13 +70,26 @@ def main(num_epochs: int, num_workers: int):
         device=device,
         writer=writer,
     )
+    # Test the model on unseen data
+    # Load the best model
+    best_model_path = os.path.join("checkpoints", "best_model_checkpoint.pth")
+    if os.path.exists(best_model_path):
+        print(f"Loading best model from {best_model_path}")
+        checkpoint = torch.load(best_model_path, map_location=device)
+        model.load_state_dict(checkpoint["model_state_dict"])
+        print("Best model loaded successfully.")
+    else:
+        print(f"Best model not found at {best_model_path}. Evaluating the model from last epoch.")
 
+    print("\nEvaluating best model on Test Dataset...")
     test_loss, test_acc = engine.test_step(
         model=model,
         dataloader=test_dataloader,
         loss_fn=loss_fn,
         device=device,
     )
+    print("\n--- Final Test Results ---")
+    print(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_acc:.4f}")
 
 
 if __name__ == "__main__":
