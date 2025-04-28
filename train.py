@@ -56,7 +56,7 @@ def main(num_epochs: int, num_workers: int):
         lr=1e-3,
         weight_decay=1e-2,
     )
-    loss_fn = torch.nn.CrossEntropyLoss()
+    loss_fn = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
 
     writer = SummaryWriter("runs/urbansound8k")
 
