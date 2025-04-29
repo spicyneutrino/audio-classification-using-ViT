@@ -155,7 +155,7 @@ def preprocess_data(is_training: bool):
             labels.append(label)
 
         return {
-            "pixel_values": processed_spectrograms,
+            "pixel_values": torch.stack(processed_spectrograms),
             "labels": labels,
         }
 
