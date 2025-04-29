@@ -8,3 +8,4 @@ tqdm
 tensorboard
 torchinfo
 matplotlib
+torch_audiomentations
