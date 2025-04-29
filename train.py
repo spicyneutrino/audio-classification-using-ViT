@@ -23,6 +23,19 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
     print(f"Number of workers: {num_workers}")
     print(f"Batch size: {batch_size}")
 
+    job_id = os.environ.get("SLURM_JOBID")
+    now = datetime.datetime.now()
+    if job_id:
+        run_identifier = f"slurm_{job_id}_{now}"
+    else:
+        timestamp = now.strftime("%m-%d_%H-%M-%S")
+        run_identifier = f"local_{timestamp}"
+
+    checkpoint_dir = "checkpoints"
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    best_model_filename = f"best_model_{run_identifier}.pth"
+    best_model_path = os.path.join(checkpoint_dir, best_model_filename)
+
     train_dataset, val_dataset, test_dataset = get_datasets()
     train_dataloader = DataLoader(
         train_dataset,
@@ -48,8 +61,8 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
         pin_memory=True,
     )
 
-    head_lr = 3e-4
-    encoder_lr = 3e-5
+    head_lr = 1e-4
+    encoder_lr = 5e-6
     model = get_model(num_classes=NUM_CLASSES, device=device)
     params_to_optimize = [
         {"params": model.heads.parameters(), "lr": head_lr},
@@ -65,6 +78,11 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
     )
     loss_fn = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
 
+    # Initialize the LR scheduler
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer=optimizer, T_max=num_epochs, eta_min=1e-6
+    )
+
     writer = SummaryWriter("runs/urbansound8k")
 
     model_results = engine.train(
@@ -76,20 +94,11 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
         epochs=num_epochs,
         device=device,
         writer=writer,
+        best_model_save_path=best_model_path,
+        scheduler=scheduler,
     )
     # Test the model on unseen data
     # Load the best model
-    job_id = os.environ.get("SLURM_JOBID")
-    if job_id:
-        run_identifier = f"slurm_{job_id}_{now}"
-    else:
-        now = datetime.datetime.now()
-        timestamp = now.strftime("%m-%d_%H-%M-%S")
-        run_identifier = f"local_{timestamp}"
-    checkpoint_dir = "checkpoints"
-    os.makedirs(checkpoint_dir, exist_ok=True)
-    best_model_filename = f"best_model_{run_identifier}.pth"
-    best_model_path = os.path.join(checkpoint_dir, best_model_filename)
 
     if os.path.exists(best_model_path):
         print(f"Loading best model from {best_model_path}")

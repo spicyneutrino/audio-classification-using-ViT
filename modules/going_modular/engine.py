@@ -151,23 +151,11 @@ def train(
     writer: torch.utils.tensorboard.SummaryWriter,
     save_dir: str = "checkpoints",
     patience: int = 10,
+    best_model_save_path: str = "best_model.pth",
+    scheduler: torch.optim.lr_scheduler._LRScheduler = None,
 ) -> Dict[str, List]:
 
     results = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
-
-    job_id = os.environ.get("SLURM_JOBID")
-    if job_id:
-        run_identifier = f"slurm_{job_id}_{now}"
-        print(f"--- Running under Slurm. Using Job ID: {job_id} ---")
-    else:
-        now = datetime.datetime.now()
-        timestamp = now.strftime("%m-%d_%H-%M-%S")
-        run_identifier = f"local_{timestamp}"
-        print(f"--- Running locally. Using timestamp: {timestamp} ---")
-    checkpoint_dir = "checkpoints"
-    os.makedirs(checkpoint_dir, exist_ok=True)
-    best_model_filename = f"best_model_{run_identifier}.pth"
-    best_model_path = os.path.join(checkpoint_dir, best_model_filename)
 
     # It's good practice to trace in eval mode
     model.train()
@@ -178,7 +166,6 @@ def train(
     # Initialize early stopping variables
     best_val_loss = np.inf
     epoch_no_improvement = 0
-    best_model_path = os.path.join(save_dir, "best_model_checkpoint.pth")
     # Create directory to save checkpoints
     if not os.path.exists(save_dir):
         os.makedirs(save_dir, exist_ok=True)
@@ -228,6 +215,15 @@ def train(
             global_step=epoch,
         )
 
+        if scheduler:
+            scheduler.step()
+            current_lr = optimizer.param_groups[0]["lr"]
+            writer.add_scalar(
+                "Learning Rate",
+                current_lr,
+                epoch,
+            )
+
         # Early stopping logic
         if val_loss < best_val_loss:
             best_val_loss = val_loss
@@ -244,8 +240,8 @@ def train(
             }
 
             try:
-                torch.save(checkpoint, best_model_path)
-                print(f"Saved best model checkpoint to {best_model_path}")
+                torch.save(checkpoint, best_model_save_path)
+                print(f"Saved best model checkpoint to {best_model_save_path}")
             except Exception as e:
                 print(f"Error saving best model checkpoint: {e}")
         else:
@@ -267,7 +263,7 @@ def train(
     writer.close()
 
     print(
-        f"Training finished. Best validation loss: {best_val_loss:.4f} achieved. Best model saved to {best_model_path}"
+        f"Training finished. Best validation loss: {best_val_loss:.4f} achieved. Best model saved to {best_model_save_path}"
     )
 
     return results
