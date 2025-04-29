@@ -1,0 +1,23 @@
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = Gain(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = AddColoredNoise(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = PitchShift(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = Shift(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+Using the latest cached version of the dataset since danavery/urbansound8K couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'default' at /scratch/ptolemy/users/kg1623/.cache/huggingface/datasets/danavery___urbansound8_k/default/0.0.0/8aa9177a0c5a6949ee4ee4b7fcabb01dfd4ae466 (last modified on Sat Apr 26 19:45:24 2025).
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch/utils/data/dataloader.py:626: UserWarning: This DataLoader will create 32 worker processes in total. Our suggested max number of worker in current system is 1, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+  0%|          | 0/250 [00:00<?, ?it/s]slurmstepd: error: *** STEP 38956.0 ON ptolemy-gpu-02 CANCELLED AT 2025-04-29T01:49:44 ***
+slurmstepd: error: *** JOB 38956 ON ptolemy-gpu-02 CANCELLED AT 2025-04-29T01:49:44 ***

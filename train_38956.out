@@ -1,0 +1,20 @@
+Job started on ptolemy-gpu-02 at Tue Apr 29 01:43:54 AM CDT 2025
+SLURM Job ID: 38956
+Number of CPUs allocated: 32
+Memory allocated: 
+Batch size: 64
+This job has 32 cpus_per_task, 64G mem, batch size of 75, and 250 epochs assigned.
+Project Root: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT
+Setting Torch cache to: /scratch/ptolemy/users/kg1623/.cache/torch
+Setting Hugging Face cache to: /scratch/ptolemy/users/kg1623/.cache/huggingface
+Current Directory: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT
+Loading modules...
+Activating existing virtual environment 'venv'...
+PYTHONPATH: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT:
+Running train.py script...
+Using device: cuda
+Number of workers: 32
+Batch size: 75
+Train dataset size: 7079
+Validation dataset size: 816
+Test dataset size: 837

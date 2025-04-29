@@ -1,20 +1,24 @@
 #!/bin/bash
-#SBATCH --job-name=model_train
-#SBATCH --output=model_train%j.out
-#SBATCH --error=model_train%j.err
+#SBATCH --job-name=train
+#SBATCH --output=train_%j.out
+#SBATCH --error=train_%j.err
 #SBATCH --partition=ptolemy
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:a100_1g.10gb:1
 #SBATCH --account=research-cse
 #SBATCH --nodes=1                   # Number of nodes to use
-#SBATCH --ntasks=1                  # Total number of MPI tasks (processes)
-#SBATCH --cpus-per-task=32          # Request multiple CPUs for the main task
+#SBATCH --ntasks=1                  # Total number of tasks (processes)
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=64G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
-#SBATCH --time=03:00:00             # Maximum runtime (HH:MM:SS)
+#SBATCH --time=12:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
 echo "Job started on $(hostname) at $(date)"
 echo "SLURM Job ID: $SLURM_JOB_ID"
 echo "Number of CPUs allocated: $SLURM_CPUS_PER_TASK" # Verify CPU allocation
+echo "Memory allocated: $SLURM_MEM"
+echo "Batch size: 75"
+echo "This job has 1 worker and 250 epochs assigned."
+echo "Time Augment + Last 4 Layers of Encoder Unfrozen"
 
 # Define the absolute path to your project directory
 export PROJECT_ROOT="/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT"
@@ -66,7 +70,7 @@ echo "PYTHONPATH: $PYTHONPATH"
 # --- Run the Training Script ---
 echo "Running train.py script..."
 
-srun python train.py --num_epochs 75 --num_workers $SLURM_CPUS_PER_TASK
+srun python train.py --num_epochs 250 --num_workers 1  --batch_size 75
 
 EXIT_CODE=$? # Capture exit code
 echo "Python script finished with exit code $EXIT_CODE at $(date)"

@@ -1,0 +1,21 @@
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = Gain(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = AddColoredNoise(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = PitchShift(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = Shift(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+Using the latest cached version of the dataset since danavery/urbansound8K couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'default' at /scratch/ptolemy/users/kg1623/.cache/huggingface/datasets/danavery___urbansound8_k/default/0.0.0/8aa9177a0c5a6949ee4ee4b7fcabb01dfd4ae466 (last modified on Sat Apr 26 19:45:24 2025).
+  0%|          | 0/250 [00:00<?, ?it/s]  0%|          | 1/250 [04:19<17:55:47, 259.23s/it]  1%|          | 2/250 [08:31<17:34:26, 255.11s/it]  1%|          | 3/250 [12:43<17:25:12, 253.90s/it]  2%|▏         | 4/250 [16:56<17:18:15, 253.23s/it]  2%|▏         | 5/250 [21:07<17:11:37, 252.64s/it]  2%|▏         | 6/250 [25:25<17:14:55, 254.49s/it]  3%|▎         | 7/250 [29:38<17:08:05, 253.85s/it]  3%|▎         | 8/250 [33:55<17:07:58, 254.87s/it]  4%|▎         | 9/250 [38:07<17:00:42, 254.12s/it]  4%|▍         | 10/250 [42:22<16:56:49, 254.21s/it]  4%|▍         | 11/250 [46:30<16:45:06, 252.33s/it]  5%|▍         | 12/250 [50:44<16:42:45, 252.79s/it]  5%|▌         | 13/250 [54:59<16:41:35, 253.57s/it]  6%|▌         | 14/250 [59:13<16:37:20, 253.56s/it]  6%|▌         | 15/250 [1:03:23<16:28:49, 252.47s/it]  6%|▋         | 16/250 [1:07:40<16:30:59, 254.10s/it]  7%|▋         | 17/250 [1:11:52<16:24:11, 253.44s/it]  7%|▋         | 18/250 [1:16:03<16:16:18, 252.49s/it]  8%|▊         | 19/250 [1:20:18<16:15:22, 253.35s/it]  8%|▊         | 20/250 [1:24:28<16:07:12, 252.31s/it]  8%|▊         | 21/250 [1:28:44<16:07:52, 253.59s/it]  9%|▉         | 22/250 [1:32:56<16:01:17, 252.97s/it]  9%|▉         | 23/250 [1:37:09<15:57:07, 252.98s/it] 10%|▉         | 24/250 [1:41:25<15:56:33, 253.95s/it] 10%|█         | 25/250 [1:45:41<15:54:11, 254.45s/it] 10%|█         | 25/250 [1:49:52<16:28:53, 263.70s/it]
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch/__init__.py:2150: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert condition, message
