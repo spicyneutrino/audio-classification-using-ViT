@@ -16,7 +16,7 @@ def get_model(num_classes: int = 10, device="cpu") -> nn.Module:
     ).to(device)
     for param in model.heads.parameters():
         param.requires_grad = True
-    num_of_layers_to_unfreeze = len(model.encoder.layers) // 4
+    num_of_layers_to_unfreeze = len(model.encoder.layers) // 3
     for layer in model.encoder.layers[-num_of_layers_to_unfreeze:]:
         for param in layer.parameters():
             param.requires_grad = True

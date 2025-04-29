@@ -46,15 +46,17 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
         num_workers=num_workers,
         pin_memory=True,
     )
-
+    
+    head_lr = 3e-4
+    encoder_lr = 3e-5 
     model = get_model(num_classes=NUM_CLASSES, device=device)
     params_to_optimize = [
-        {"params": model.heads.parameters(), "lr": 1e-3},
+        {"params": model.heads.parameters(), "lr": head_lr},
     ]
 
-    num_of_layers_to_unfreeze = len(model.encoder.layers) // 2
+    num_of_layers_to_unfreeze = len(model.encoder.layers) // 3
     for layer in model.encoder.layers[-num_of_layers_to_unfreeze:]:
-        params_to_optimize.append({"params": layer.parameters(), "lr": 1e-6})
+        params_to_optimize.append({"params": layer.parameters(), "lr": encoder_lr})
     optimizer = torch.optim.AdamW(
         params_to_optimize,
         lr=1e-3,
