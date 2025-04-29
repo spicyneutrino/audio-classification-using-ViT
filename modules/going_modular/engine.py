@@ -3,6 +3,7 @@ Contains functions for training and testing a PyTorch model.
 """
 
 import torch
+import datetime
 import numpy as np
 from torch.amp import GradScaler
 
@@ -153,6 +154,20 @@ def train(
 ) -> Dict[str, List]:
 
     results = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
+
+    job_id = os.environ.get("SLURM_JOBID")
+    if job_id:
+        run_identifier = f"slurm_{job_id}_{now}"
+        print(f"--- Running under Slurm. Using Job ID: {job_id} ---")
+    else:
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%m-%d_%H-%M-%S")
+        run_identifier = f"local_{timestamp}"
+        print(f"--- Running locally. Using timestamp: {timestamp} ---")
+    checkpoint_dir = "checkpoints"
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    best_model_filename = f"best_model_{run_identifier}.pth"
+    best_model_path = os.path.join(checkpoint_dir, best_model_filename)
 
     # It's good practice to trace in eval mode
     model.train()

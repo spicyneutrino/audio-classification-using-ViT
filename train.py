@@ -1,5 +1,6 @@
 import argparse
 import os
+import datetime
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
@@ -46,9 +47,9 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
         num_workers=num_workers,
         pin_memory=True,
     )
-    
+
     head_lr = 3e-4
-    encoder_lr = 3e-5 
+    encoder_lr = 3e-5
     model = get_model(num_classes=NUM_CLASSES, device=device)
     params_to_optimize = [
         {"params": model.heads.parameters(), "lr": head_lr},
@@ -78,7 +79,18 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
     )
     # Test the model on unseen data
     # Load the best model
-    best_model_path = os.path.join("checkpoints", "best_model_checkpoint.pth")
+    job_id = os.environ.get("SLURM_JOBID")
+    if job_id:
+        run_identifier = f"slurm_{job_id}_{now}"
+    else:
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%m-%d_%H-%M-%S")
+        run_identifier = f"local_{timestamp}"
+    checkpoint_dir = "checkpoints"
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    best_model_filename = f"best_model_{run_identifier}.pth"
+    best_model_path = os.path.join(checkpoint_dir, best_model_filename)
+
     if os.path.exists(best_model_path):
         print(f"Loading best model from {best_model_path}")
         checkpoint = torch.load(best_model_path, map_location=device)
