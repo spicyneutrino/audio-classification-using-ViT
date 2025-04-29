@@ -163,7 +163,7 @@ def preprocess_data(is_training: bool):
 
 
 def get_datasets():
-    ds = load_dataset("danavery/urbansound8K")
+    ds = load_dataset("danavery/urbansound8K", streaming=False)
     full_dataset = ds["train"]
     if "fold" in full_dataset.features:
         train_dataset = full_dataset.filter(lambda x: x["fold"] <= 8)

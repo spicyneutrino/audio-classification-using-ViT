@@ -25,6 +25,7 @@ try:
     ds = load_dataset(
         dataset_name,
         cache_dir=cache_dir,
+        streaming=False
         # download_mode="force_redownload", # Optional
         # trust_remote_code=True, # Optional
     )
