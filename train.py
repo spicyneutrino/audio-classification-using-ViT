@@ -63,6 +63,7 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
 
     head_lr = 3e-4
     encoder_lr = 2e-5
+
     model = get_model(num_classes=NUM_CLASSES, device=device)
     params_to_optimize = [
         {"params": model.heads.parameters(), "lr": head_lr},

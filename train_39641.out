@@ -1,0 +1,16 @@
+Job started on ptolemy-gpu-05 at Wed Apr 30 01:14:43 PM CDT 2025
+SLURM Job ID: 39641
+Number of CPUs allocated: 1
+Memory allocated: 
+Batch size: 64
+This job has 1 worker and 100 epochs assigned.
+unfrozen encoder layer= 2 | head_lr= 3e-4 | encoder_lr= 3e-5 | weight_decay= 3e-2 | with Time Augmentations
+Project Root: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT
+Setting Torch cache to: /scratch/ptolemy/users/kg1623/.cache/torch
+Setting Hugging Face cache to: /scratch/ptolemy/users/kg1623/.cache/huggingface
+Current Directory: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT
+Loading modules...
+Activating existing virtual environment 'venv'...
+PYTHONPATH: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT:
+Running train.py script...
+Python script finished with exit code 1 at Wed Apr 30 01:14:47 PM CDT 2025

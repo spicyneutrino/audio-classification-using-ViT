@@ -12,13 +12,17 @@
 #SBATCH --time=12:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
+NUM_EPOCHS=100
+NUM_WORKERS=$SLURM_CPUS_PER_TASK
+BATCH_SIZE=64
+
 echo "Job started on $(hostname) at $(date)"
 echo "SLURM Job ID: $SLURM_JOB_ID"
 echo "Number of CPUs allocated: $SLURM_CPUS_PER_TASK" # Verify CPU allocation
 echo "Memory allocated: $SLURM_MEM"
-echo "Batch size: 75"
-echo "This job has 1 worker and 250 epochs assigned."
-echo "Time Augment + Last 4 Layers of Encoder Unfrozen"
+echo "Batch size: $BATCH_SIZE"
+echo "This job has $NUM_WORKERS worker and $NUM_EPOCHS epochs assigned."
+echo "unfrozen encoder layer= 2 | head_lr= 3e-4 | encoder_lr= 3e-5 | weight_decay= 3e-2 | with Time Augmentations"
 
 # Define the absolute path to your project directory
 export PROJECT_ROOT="/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT"
@@ -70,7 +74,7 @@ echo "PYTHONPATH: $PYTHONPATH"
 # --- Run the Training Script ---
 echo "Running train.py script..."
 
-srun python train.py --num_epochs 250 --num_workers 1  --batch_size 75
+python train.py --num_epochs $NUM_EPOCHS --num_workers $NUM_WORKERS  --batch_size $BATCH_SIZE
 
 EXIT_CODE=$? # Capture exit code
 echo "Python script finished with exit code $EXIT_CODE at $(date)"

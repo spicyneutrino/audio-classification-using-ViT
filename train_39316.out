@@ -1,0 +1,95 @@
+Job started on ptolemy-gpu-02 at Wed Apr 30 12:22:04 AM CDT 2025
+SLURM Job ID: 39316
+Number of CPUs allocated: 8
+Memory allocated: 
+Batch size: 64
+This job has 8 worker and 100 epochs assigned.
+unfrozen encoder layer= 4 | head_lr =1e-4 | encoder_lr = 2e-5
+Project Root: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT
+Setting Torch cache to: /scratch/ptolemy/users/kg1623/.cache/torch
+Setting Hugging Face cache to: /scratch/ptolemy/users/kg1623/.cache/huggingface
+Current Directory: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT
+Loading modules...
+Activating existing virtual environment 'venv'...
+PYTHONPATH: /scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT:
+Running train.py script...
+Using device: cuda
+Number of workers: 8
+Batch size: 64
+Train dataset size: 7079
+Validation dataset size: 816
+Test dataset size: 837
+Epoch: 1 | train_loss: 2.0083 | train_acc: 0.2810 | val_loss: 1.7762 | val_acc: 0.3634
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 2 | train_loss: 1.6710 | train_acc: 0.4549 | val_loss: 1.5649 | val_acc: 0.5152
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 3 | train_loss: 1.4649 | train_acc: 0.5688 | val_loss: 1.4915 | val_acc: 0.5942
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 4 | train_loss: 1.3321 | train_acc: 0.6318 | val_loss: 1.4822 | val_acc: 0.6110
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 5 | train_loss: 1.2572 | train_acc: 0.6707 | val_loss: 1.4357 | val_acc: 0.6258
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 6 | train_loss: 1.1847 | train_acc: 0.7019 | val_loss: 1.3528 | val_acc: 0.6334
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 7 | train_loss: 1.1195 | train_acc: 0.7407 | val_loss: 1.3516 | val_acc: 0.6294
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 8 | train_loss: 1.0562 | train_acc: 0.7711 | val_loss: 1.3162 | val_acc: 0.6418
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 9 | train_loss: 1.0094 | train_acc: 0.7910 | val_loss: 1.3653 | val_acc: 0.6486
+Epoch 9 - No improvement in validation loss.
+Epoch: 10 | train_loss: 0.9707 | train_acc: 0.8127 | val_loss: 1.4351 | val_acc: 0.6442
+Epoch 10 - No improvement in validation loss.
+Epoch: 11 | train_loss: 0.9446 | train_acc: 0.8229 | val_loss: 1.3864 | val_acc: 0.6266
+Epoch 11 - No improvement in validation loss.
+Epoch: 12 | train_loss: 0.9157 | train_acc: 0.8355 | val_loss: 1.3550 | val_acc: 0.6358
+Epoch 12 - No improvement in validation loss.
+Epoch: 13 | train_loss: 0.8844 | train_acc: 0.8520 | val_loss: 1.3423 | val_acc: 0.6450
+Epoch 13 - No improvement in validation loss.
+Epoch: 14 | train_loss: 0.8638 | train_acc: 0.8587 | val_loss: 1.3233 | val_acc: 0.6562
+Epoch 14 - No improvement in validation loss.
+Epoch: 15 | train_loss: 0.8561 | train_acc: 0.8607 | val_loss: 1.3445 | val_acc: 0.6550
+Epoch 15 - No improvement in validation loss.
+Epoch: 16 | train_loss: 0.8338 | train_acc: 0.8731 | val_loss: 1.3288 | val_acc: 0.6382
+Epoch 16 - No improvement in validation loss.
+Epoch: 17 | train_loss: 0.8099 | train_acc: 0.8864 | val_loss: 1.3670 | val_acc: 0.6599
+Epoch 17 - No improvement in validation loss.
+Epoch: 18 | train_loss: 0.7940 | train_acc: 0.8875 | val_loss: 1.3161 | val_acc: 0.6611
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 19 | train_loss: 0.7809 | train_acc: 0.8918 | val_loss: 1.2862 | val_acc: 0.6667
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 20 | train_loss: 0.7713 | train_acc: 0.8977 | val_loss: 1.2761 | val_acc: 0.6671
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 21 | train_loss: 0.7614 | train_acc: 0.9051 | val_loss: 1.3090 | val_acc: 0.6639
+Epoch 21 - No improvement in validation loss.
+Epoch: 22 | train_loss: 0.7504 | train_acc: 0.9061 | val_loss: 1.2379 | val_acc: 0.6743
+Saved best model checkpoint to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Epoch: 23 | train_loss: 0.7351 | train_acc: 0.9169 | val_loss: 1.3297 | val_acc: 0.6695
+Epoch 23 - No improvement in validation loss.
+Epoch: 24 | train_loss: 0.7279 | train_acc: 0.9169 | val_loss: 1.3941 | val_acc: 0.6791
+Epoch 24 - No improvement in validation loss.
+Epoch: 25 | train_loss: 0.7183 | train_acc: 0.9204 | val_loss: 1.3502 | val_acc: 0.6595
+Epoch 25 - No improvement in validation loss.
+Epoch: 26 | train_loss: 0.7078 | train_acc: 0.9274 | val_loss: 1.2559 | val_acc: 0.6795
+Epoch 26 - No improvement in validation loss.
+Epoch: 27 | train_loss: 0.7024 | train_acc: 0.9227 | val_loss: 1.2997 | val_acc: 0.6847
+Epoch 27 - No improvement in validation loss.
+Epoch: 28 | train_loss: 0.6842 | train_acc: 0.9369 | val_loss: 1.3612 | val_acc: 0.6803
+Epoch 28 - No improvement in validation loss.
+Epoch: 29 | train_loss: 0.6844 | train_acc: 0.9364 | val_loss: 1.3174 | val_acc: 0.6979
+Epoch 29 - No improvement in validation loss.
+Epoch: 30 | train_loss: 0.6772 | train_acc: 0.9406 | val_loss: 1.3480 | val_acc: 0.6771
+Epoch 30 - No improvement in validation loss.
+Epoch: 31 | train_loss: 0.6788 | train_acc: 0.9393 | val_loss: 1.3482 | val_acc: 0.6663
+Epoch 31 - No improvement in validation loss.
+Epoch: 32 | train_loss: 0.6635 | train_acc: 0.9442 | val_loss: 1.3330 | val_acc: 0.6827
+Epoch 32 - No improvement in validation loss.
+Early stopping triggered after 10 epochs without improvement.
+Training finished. Best validation loss: 1.2379 achieved. Best model saved to checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Loading best model from checkpoints/best_model_slurm_39316_2025-04-30 00:22:13.815796.pth
+Best model loaded successfully.
+
+Evaluating best model on Test Dataset...
+
+--- Final Test Results ---
+Test Loss: 1.3853, Test Accuracy: 0.6315
+Python script finished with exit code 0 at Wed Apr 30 01:30:25 AM CDT 2025
