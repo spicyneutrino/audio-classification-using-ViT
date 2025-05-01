@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from scripts.data import get_datasets
 from scripts.model import get_model
-from modules.going_modular import engine
+from scripts import engine
 
 NUM_CLASSES = 10
 
