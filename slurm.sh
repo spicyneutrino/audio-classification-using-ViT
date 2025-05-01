@@ -7,14 +7,14 @@
 #SBATCH --account=research-cse
 #SBATCH --nodes=1                   # Number of nodes to use
 #SBATCH --ntasks=1                  # Total number of tasks (processes)
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=64G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=128G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
 #SBATCH --time=12:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
 NUM_EPOCHS=100
 NUM_WORKERS=$SLURM_CPUS_PER_TASK
-BATCH_SIZE=64
+BATCH_SIZE=128
 
 echo "Job started on $(hostname) at $(date)"
 echo "SLURM Job ID: $SLURM_JOB_ID"
@@ -22,7 +22,7 @@ echo "Number of CPUs allocated: $SLURM_CPUS_PER_TASK" # Verify CPU allocation
 echo "Memory allocated: $SLURM_MEM"
 echo "Batch size: $BATCH_SIZE"
 echo "This job has $NUM_WORKERS worker and $NUM_EPOCHS epochs assigned."
-echo "unfrozen encoder layer= 2 | head_lr= 3e-4 | encoder_lr= 3e-5 | weight_decay= 3e-2 | with Time Augmentations"
+
 
 # Define the absolute path to your project directory
 export PROJECT_ROOT="/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT"
