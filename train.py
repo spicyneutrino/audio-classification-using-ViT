@@ -74,7 +74,7 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
     optimizer = torch.optim.AdamW(
         params_to_optimize,
         lr=1e-3,
-        weight_decay=3e-2,
+        weight_decay=5e-2,
     )
     loss_fn = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
 
