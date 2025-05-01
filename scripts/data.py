@@ -43,31 +43,31 @@ handle_channels_transform = HandleChannels()
 resize_transform = TV.Resize(VIT_INPUT_SIZE, antialias=True)
 normalize_transform = TV.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)
 
-time_domain_transforms_train = Compose(
-    transforms=[
-        # Apply gain variation
-        Gain(min_gain_in_db=-5.0, max_gain_in_db=5.0, p=0.5),
-        # Add Gaussian noise
-        AddColoredNoise(
-            min_snr_in_db=10.0,
-            max_snr_in_db=25.0,
-            min_f_decay=-2.0,
-            max_f_decay=2.0,
-            p=0.3,
-        ),
-        # Apply pitch shift
-        PitchShift(
-            min_transpose_semitones=-1,
-            max_transpose_semitones=1,
-            sample_rate=TARGET_SAMPLE_RATE,
-            p=0.3,
-        ),
-        # Circularly shift the audio in time
-        Shift(min_shift=-0.05, max_shift=0.05, p=0.4, sample_rate=TARGET_SAMPLE_RATE),
-    ],
-    output_type="dict",
-    p=1,
-)
+# time_domain_transforms_train = Compose(
+#     transforms=[
+#         # Apply gain variation
+#         Gain(min_gain_in_db=-5.0, max_gain_in_db=5.0, p=0.5),
+#         # Add Gaussian noise
+#         AddColoredNoise(
+#             min_snr_in_db=10.0,
+#             max_snr_in_db=25.0,
+#             min_f_decay=-2.0,
+#             max_f_decay=2.0,
+#             p=0.3,
+#         ),
+#         # Apply pitch shift
+#         PitchShift(
+#             min_transpose_semitones=-1,
+#             max_transpose_semitones=1,
+#             sample_rate=TARGET_SAMPLE_RATE,
+#             p=0.3,
+#         ),
+#         # Circularly shift the audio in time
+#         Shift(min_shift=-0.05, max_shift=0.05, p=0.4, sample_rate=TARGET_SAMPLE_RATE),
+#     ],
+#     output_type="dict",
+#     p=1,
+# )
 
 eval_transforms = TV.Compose(
     [
@@ -135,19 +135,19 @@ def preprocess_data(is_training: bool):
             # --- End of Padding ---
 
             # Time domain augmentations
-            if is_training:
-                try:
-                    # torch-audiomentations expects (batch_size, num_samples) or (batch_size, num_channels, num_samples)
-                    # Adding a batch dimension
-                    augmented_waveform = time_domain_transforms_train(
-                        samples=waveform.unsqueeze(0).unsqueeze(1),
-                        sample_rate=TARGET_SAMPLE_RATE,
-                    )
-                    waveform = augmented_waveform["samples"].squeeze()
-                except Exception as e:
-                    print(
-                        f"Time domain augmentation failed: {e}. Using original waveform."
-                    )
+            # if is_training:
+            #     try:
+            #         # torch-audiomentations expects (batch_size, num_samples) or (batch_size, num_channels, num_samples)
+            #         # Adding a batch dimension
+            #         augmented_waveform = time_domain_transforms_train(
+            #             samples=waveform.unsqueeze(0).unsqueeze(1),
+            #             sample_rate=TARGET_SAMPLE_RATE,
+            #         )
+            #         waveform = augmented_waveform["samples"].squeeze()
+            #     except Exception as e:
+            #         print(
+            #             f"Time domain augmentation failed: {e}. Using original waveform."
+            #         )
             # Apply the Compose pipeline
             processed_spectrogram = processor(waveform)
 
