@@ -7,14 +7,14 @@
 #SBATCH --account=research-cse
 #SBATCH --nodes=1                   # Number of nodes to use
 #SBATCH --ntasks=1                  # Total number of tasks (processes)
-#SBATCH --cpus-per-task=64
+#SBATCH --cpus-per-task=128
 #SBATCH --mem=128G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
 #SBATCH --time=12:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
 NUM_EPOCHS=100
 NUM_WORKERS=$SLURM_CPUS_PER_TASK
-BATCH_SIZE=128
+BATCH_SIZE=256
 
 echo "Job started on $(hostname) at $(date)"
 echo "SLURM Job ID: $SLURM_JOB_ID"
