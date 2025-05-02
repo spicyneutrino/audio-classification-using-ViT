@@ -8,7 +8,7 @@
 #SBATCH --nodes=1                   # Number of nodes to use
 #SBATCH --ntasks=1                  # Total number of tasks (processes)
 #SBATCH --cpus-per-task=128
-#SBATCH --mem-per-cpu=8G            # Request appropriate memory per cpu (e.g., 2G, 4G, 8G)
+#SBATCH --mem=128G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
 #SBATCH --time=12:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
