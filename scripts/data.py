@@ -158,7 +158,7 @@ def preprocess_data(is_training: bool):
 
         return {
             "pixel_values": torch.stack(processed_spectrograms),
-            "labels": labels,
+            "labels": torch.stack(labels),
         }
 
     return preprocess_batch
