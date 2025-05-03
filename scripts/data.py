@@ -46,24 +46,24 @@ normalize_transform = TV.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)
 time_domain_transforms_train = Compose(
     transforms=[
         # Apply gain variation
-        Gain(min_gain_in_db=-5.0, max_gain_in_db=5.0, p=0.5),
+        Gain(min_gain_in_db=-8.0, max_gain_in_db=8.0, p=0.5),
         # Add Gaussian noise
         AddColoredNoise(
-            min_snr_in_db=10.0,
-            max_snr_in_db=25.0,
+            min_snr_in_db=5.0,
+            max_snr_in_db=30.0,
             min_f_decay=-2.0,
             max_f_decay=2.0,
             p=0.3,
         ),
         # Apply pitch shift
         PitchShift(
-            min_transpose_semitones=-1,
-            max_transpose_semitones=1,
+            min_transpose_semitones=-2,
+            max_transpose_semitones=2,
             sample_rate=TARGET_SAMPLE_RATE,
             p=0.3,
         ),
         # Circularly shift the audio in time
-        Shift(min_shift=-0.05, max_shift=0.05, p=0.4, sample_rate=TARGET_SAMPLE_RATE),
+        Shift(min_shift=-0.1, max_shift=0.1, p=0.4, sample_rate=TARGET_SAMPLE_RATE),
     ],
     output_type="dict",
     p=1,
