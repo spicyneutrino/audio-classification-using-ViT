@@ -150,7 +150,7 @@ def train(
     device: torch.device,
     writer: torch.utils.tensorboard.SummaryWriter,
     save_dir: str = "checkpoints",
-    patience: int = 10,
+    patience: int = 20,
     best_model_save_path: str = "best_model.pth",
     scheduler: torch.optim.lr_scheduler._LRScheduler = None,
 ) -> Dict[str, List]:
