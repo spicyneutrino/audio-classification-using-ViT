@@ -1,0 +1,19 @@
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = Gain(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = AddColoredNoise(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = PitchShift(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT/venv/lib/python3.10/site-packages/torch_audiomentations/core/transforms_interface.py:76: FutureWarning: Transforms now expect an `output_type` argument that currently defaults to 'tensor', will default to 'dict' in v0.12, and will be removed in v0.13. Make sure to update your code to something like:
+  >>> augment = Shift(..., output_type='dict')
+  >>> augmented_samples = augment(samples).samples
+  warnings.warn(
+Using the latest cached version of the dataset since danavery/urbansound8K couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'default' at /scratch/ptolemy/users/kg1623/.cache/huggingface/datasets/danavery___urbansound8_k/default/0.0.0/8aa9177a0c5a6949ee4ee4b7fcabb01dfd4ae466 (last modified on Sat Apr 26 19:45:24 2025).
+  0%|          | 0/100 [00:00<?, ?it/s]  1%|          | 1/100 [01:00<1:40:20, 60.81s/it]  2%|▏         | 2/100 [01:50<1:28:10, 53.98s/it]  3%|▎         | 3/100 [02:40<1:24:59, 52.57s/it]  4%|▍         | 4/100 [03:33<1:23:54, 52.44s/it]
