@@ -22,10 +22,14 @@ TIME_MASK_PARAM = 40
 
 class HandleChannels(nn.Module):
     def forward(self, spec: torch.Tensor) -> torch.Tensor:
-        if spec.ndim == 2:
-            spec = spec.unsqueeze(0)
-        if spec.shape[0] == 1:
-            spec = spec.repeat(3, 1, 1)
+        # [B, C, H, W]
+
+        if spec.ndim == 3:
+            # add color channel
+            spec = spec.unsqueeze(1)
+        # if color channel is 1, repeat it to 3 channels
+        if spec.shape[1] == 1:
+            spec = spec.repeat(1, 3, 1, 1)
         return spec
 
 
@@ -101,17 +105,14 @@ def preprocess_data(is_training: bool):
     FIXED_LENGTH = 4 * TARGET_SAMPLE_RATE
 
     def preprocess_batch(batch: dict) -> dict:
-        processed_spectrograms = []
-        labels = []
-        audio_list = batch["audio"]
-        classID_list = batch["classID"]
-        num_items = len(classID_list)
+        """Preprocesses a batch of data"""
 
-        for i in range(num_items):
-            audio_data = audio_list[i]
+        waveforms = []
+        audio_list = batch["audio"]
+
+        for audio_data in audio_list:
             waveform = torch.from_numpy(audio_data["array"]).float()
             sample_rate = audio_data["sampling_rate"]
-            label = torch.tensor(classID_list[i], dtype=torch.long)
 
             # Resample if necessary
             if sample_rate != TARGET_SAMPLE_RATE:
@@ -132,7 +133,8 @@ def preprocess_data(is_training: bool):
                 waveform = F.pad(waveform, (0, padding_needed))
             elif waveform.shape[-1] > FIXED_LENGTH:
                 waveform = waveform[..., :FIXED_LENGTH]
-            # --- End of Padding ---
+
+            waveforms.append(waveform)
 
             # # Time domain augmentations
             # if is_training:
@@ -149,15 +151,16 @@ def preprocess_data(is_training: bool):
             #             f"Time domain augmentation failed: {e}. Using original waveform."
             #         )
 
-            # Apply the Compose pipeline
-            processed_spectrogram = processor(waveform)
+        #  Stack into batch [batch_size, time]
+        waveforms = torch.stack(waveforms)
 
-            processed_spectrograms.append(processed_spectrogram)
-            labels.append(label)
+        # Batched Transforms
+        processed_spectrograms = processor(handle_channels_transform(waveforms))
+        labels = torch.tensor(batch["classID"], dtype=torch.long)
 
         return {
-            "pixel_values": torch.stack(processed_spectrograms),
-            "labels": torch.stack(labels),
+            "pixel_values": processed_spectrograms,
+            "labels": labels,
         }
 
     return preprocess_batch
