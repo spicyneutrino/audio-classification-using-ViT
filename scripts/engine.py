@@ -6,7 +6,7 @@ import torch
 import datetime
 import numpy as np
 from torch.amp import GradScaler
-
+import torchvision.transforms.v2 as TV
 import torch.utils.tensorboard
 from tqdm.auto import tqdm
 from typing import Dict, List, Tuple
@@ -48,11 +48,17 @@ def train_step(
     # Setup train loss and train accuracy values
     train_loss, train_acc = 0, 0
 
+    cutmix = TV.CutMix(num_classes=10, alpha=1.0)
+    mixup = TV.MixUp(num_classes=10, alpha=0.2)
+    cutmix_or_mixup = TV.RandomChoice([cutmix, mixup])
+
     # Loop through data loader data batches
     for _, batch_dict in enumerate(dataloader):
         # Send data to target device
         X = batch_dict["pixel_values"].to(device)
         y = batch_dict["labels"].to(device)
+
+        X, y = cutmix_or_mixup((X, y))
 
         # Automatic mixed precision (AMP) context manager
         with torch.amp.autocast(device_type=device.type, dtype=torch.float16):
@@ -76,7 +82,13 @@ def train_step(
         scaler.update()
         # Calculate and accumulate accuracy metric across all batches
         y_pred_class = torch.argmax(torch.softmax(y_pred, dim=1), dim=1)
-        train_acc += (y_pred_class == y).sum().item() / len(y_pred)
+
+        if y.ndim == 2:
+            # [label, batch]
+            y_label = y.argmax(dim=1)
+        else:
+            y_label = y
+        train_acc += (y_pred_class == y_label).sum().item() / len(y_pred)
 
     # Adjust metrics to get average loss and accuracy per batch
     train_loss = train_loss / len(dataloader)
