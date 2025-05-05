@@ -7,11 +7,20 @@ from torch.utils.tensorboard import SummaryWriter
 from scripts.data import get_datasets
 from scripts.model import get_model
 from scripts import engine
+import numpy as np
 
 NUM_CLASSES = 10
 
 
 def main(num_epochs: int, num_workers: int, batch_size: int):
+
+    random_seed = 42
+    np.random.seed(random_seed)
+    torch.manual_seed(random_seed)
+    torch.cuda.manual_seed_all(random_seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
     device_name = "cpu"
     if torch.cuda.is_available():
         torch.backends.cudnn.benchmark = True
