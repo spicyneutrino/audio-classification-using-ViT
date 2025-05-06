@@ -12,7 +12,15 @@ import numpy as np
 NUM_CLASSES = 10
 
 
-def main(num_epochs: int, num_workers: int, batch_size: int):
+def main(
+    num_epochs: int,
+    num_workers: int,
+    batch_size: int,
+    head_lr: float,
+    encoder_lr: float,
+    use_time_augment: bool,
+    num_unfrozen_encoder_layers: int,
+):
 
     random_seed = 42
     np.random.seed(random_seed)
@@ -73,12 +81,16 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
     head_lr = 2e-4
     encoder_lr = 1e-5
 
-    model = get_model(num_classes=NUM_CLASSES, device=device)
+    model = get_model(
+        num_classes=NUM_CLASSES,
+        num_of_layers_to_unfreeze=num_unfrozen_encoder_layers,
+        device=device,
+    )
     params_to_optimize = [
         {"params": model.heads.parameters(), "lr": head_lr},
     ]
 
-    num_of_layers_to_unfreeze = len(model.encoder.layers) // 6
+    num_of_layers_to_unfreeze = num_unfrozen_encoder_layers
     for layer in model.encoder.layers[-num_of_layers_to_unfreeze:]:
         params_to_optimize.append({"params": layer.parameters(), "lr": encoder_lr})
     optimizer = torch.optim.AdamW(
@@ -106,6 +118,7 @@ def main(num_epochs: int, num_workers: int, batch_size: int):
         writer=writer,
         best_model_save_path=best_model_path,
         scheduler=scheduler,
+        use_time_augment=use_time_augment,
     )
     # Test the model on unseen data
     # Load the best model
@@ -151,5 +164,38 @@ if __name__ == "__main__":
         default=32,
         help="Number of workers for the data loaders",
     )
+    parser.add_argument(
+        "--head_lr",
+        type=float,
+        default=8e-5,
+        help="Learning rate for the head/classifier of the model",
+    )
+    parser.add_argument(
+        "--encoder_lr",
+        type=float,
+        default=1e-5,
+        help="Learning rate for unfrozen encoder layers of the model",
+    )
+    parser.add_argument(
+        "--use_time_augment",
+        type=bool,
+        default=True,
+        help="Use time augmentations for training",
+    )
+    parser.add_argument(
+        "--num_unfrozen_encoder_layers",
+        type=int,
+        default=2,
+        help="Number of encoder layers to unfreeze for training",
+    )
     args = parser.parse_args()
-    main(args.num_epochs, args.num_workers, args.batch_size)
+    main(
+        args.num_epochs,
+        args.num_workers,
+        args.batch_size,
+        args.head_lr,
+        args.encoder_lr,
+        args.use_time_augment,
+        args.num_unfrozen_encoder_layers,
+    )
+    # main(num_epochs=10, num_workers=4, batch_size=32, head_lr=8e-5, encoder_lr=1e-5, use_time_augment=True, unfreeze_encoder_layers=2)

@@ -4,7 +4,9 @@ import torch.nn as nn
 import torchvision
 
 
-def get_model(num_classes: int = 10, device="cpu") -> nn.Module:
+def get_model(
+    num_classes: int = 10, num_of_layers_to_unfreeze: int = 2, device="cpu"
+) -> nn.Module:
     weights = torchvision.models.ViT_B_16_Weights.DEFAULT
     model = torchvision.models.vit_b_16(weights=weights)
     for param in model.parameters():
