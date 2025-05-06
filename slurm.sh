@@ -7,14 +7,17 @@
 #SBATCH --account=research-cse
 #SBATCH --nodes=1                   # Number of nodes to use
 #SBATCH --ntasks=1                  # Total number of tasks (processes)
-#SBATCH --cpus-per-task=64
+#SBATCH --cpus-per-task=32
 #SBATCH --mem=128G                   # Request appropriate memory (e.g., 16G, 32G, 64G)
 #SBATCH --time=12:00:00             # Maximum runtime (HH:MM:SS)
 
 # --- Environment Setup ---
-NUM_EPOCHS=100
+NUM_EPOCHS=500
 NUM_WORKERS=$SLURM_CPUS_PER_TASK
 BATCH_SIZE=128
+HEAD_LR=8e-5
+ENCODER_LR=1e-5
+USE_TIME_AUGMENT=TRUE
 
 echo "Job started on $(hostname) at $(date)"
 echo "SLURM Job ID: $SLURM_JOB_ID"
@@ -74,7 +77,7 @@ echo "PYTHONPATH: $PYTHONPATH"
 # --- Run the Training Script ---
 echo "Running train.py script..."
 
-python train.py --num_epochs $NUM_EPOCHS --num_workers $NUM_WORKERS  --batch_size $BATCH_SIZE
+python train.py --num_epochs $NUM_EPOCHS --num_workers $NUM_WORKERS  --batch_size $BATCH_SIZE --head_lr $HEAD_LR --encoder_lr $ENCODER_LR --use_time_augment $USE_TIME_AUGMENT
 
 EXIT_CODE=$? # Capture exit code
 echo "Python script finished with exit code $EXIT_CODE at $(date)"
