@@ -17,7 +17,7 @@ NUM_WORKERS=$SLURM_CPUS_PER_TASK
 BATCH_SIZE=128
 HEAD_LR=8e-5
 ENCODER_LR=1e-5
-USE_TIME_AUGMENT=TRUE
+USE_TIME_AUGMENT=True
 
 echo "Job started on $(hostname) at $(date)"
 echo "SLURM Job ID: $SLURM_JOB_ID"
@@ -25,7 +25,7 @@ echo "Number of CPUs allocated: $SLURM_CPUS_PER_TASK" # Verify CPU allocation
 echo "Memory allocated: $SLURM_MEM"
 echo "Batch size: $BATCH_SIZE"
 echo "This job has $NUM_WORKERS worker and $NUM_EPOCHS epochs assigned."
-
+echo "HEAD_LR: $HEAD_LR | ENCODER_LR: $ENCODER_LR | USE_TIME_AUGMENT: $USE_TIME_AUGMENT"
 
 # Define the absolute path to your project directory
 export PROJECT_ROOT="/scratch/ptolemy/users/kg1623/projects/deep-learning/audio-classification-using-ViT"
