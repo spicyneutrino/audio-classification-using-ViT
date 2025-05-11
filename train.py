@@ -118,7 +118,6 @@ def main(
         writer=writer,
         best_model_save_path=best_model_path,
         scheduler=scheduler,
-        use_time_augment=use_time_augment,
     )
     # Test the model on unseen data
     # Load the best model
