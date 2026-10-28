@@ -4,6 +4,8 @@ This project fine-tunes an ImageNet-pretrained Vision Transformer to classify ur
 
 The best saved run reports **71.23% test accuracy on UrbanSound8K fold 10**. This is a historical result from [job 44101](train_44101.out), not an average across all ten folds.
 
+For the motivation, spectrogram examples, transforms, and full workflow, read the [project guide](docs/project-guide.md).
+
 ## Audio-to-image pipeline
 
 The runnable pipeline lives in [scripts/data.py](scripts/data.py), [scripts/model.py](scripts/model.py), and [scripts/engine.py](scripts/engine.py).
